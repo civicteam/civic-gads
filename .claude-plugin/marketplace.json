@@ -1,0 +1,13 @@
+{
+  "name": "civic-gads",
+  "owner": {
+    "name": "Civic Technologies",
+    "email": "engineering@civic.com"
+  },
+  "plugins": [
+    {
+      "name": "civic-gads",
+      "source": "."
+    }
+  ]
+}

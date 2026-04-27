@@ -72,17 +72,28 @@ For service-account / impersonation setups, see `SERVICE_ACCOUNT.md`.
 
 ## Setup
 
+### Option A — Install as a Claude Code plugin (recommended)
+
+The repo is also a single-plugin Claude Code marketplace. From inside any
+Claude Code session:
+
+```
+/plugin marketplace add civicteam/civic-gads
+/plugin install civic-gads@civic-gads
+```
+
+Then run `./install.sh` from the cloned plugin directory once to fetch the
+Google Ads client libraries (the plugin install only fetches the plugin
+sources; the client libs are large and stay opt-in).
+
+### Option B — Clone and run directly
+
 ```bash
-git clone <civic-internal-url>/civic-gads.git
+git clone https://github.com/civicteam/civic-gads.git
 cd civic-gads
 ./install.sh                     # Python only (default)
 ./install.sh --php --ruby        # add other languages as needed
-```
-
-Then open the directory in Claude Code:
-
-```bash
-claude
+claude                           # open this directory in Claude Code
 ```
 
 The first time you start a session, the `SessionStart` hook will:
