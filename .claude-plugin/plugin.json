@@ -1,0 +1,18 @@
+{
+  "name": "civic-gads",
+  "version": "2.3.0-civic.1",
+  "description": "Google Ads API Developer Assistant for Claude Code. Generate code, troubleshoot, optimize GAQL queries, and explain API concepts via natural language. Civic-internal port of googleads/google-ads-api-developer-assistant.",
+  "author": {
+    "name": "Civic Technologies",
+    "email": "engineering@civic.com"
+  },
+  "homepage": "https://github.com/civictechnologies/civic-gads",
+  "license": "Apache-2.0",
+  "keywords": [
+    "google-ads",
+    "gaql",
+    "advertising",
+    "api",
+    "civic"
+  ]
+}

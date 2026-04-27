@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/configure_environment.py"
+          },
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/check_github_version.py"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "exit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/cleanup_environment.py"
+          }
+        ]
+      }
+    ]
+  }
+}

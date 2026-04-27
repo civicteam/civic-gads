@@ -1,0 +1,43 @@
+civic-gads
+==========
+
+This product is a Civic-internal port of:
+
+  Google Ads API Developer Assistant
+  https://github.com/googleads/google-ads-api-developer-assistant
+  Copyright 2025-2026 Google LLC
+  Licensed under the Apache License, Version 2.0
+
+Original work was authored by Google LLC for use with the Gemini CLI.
+This port adapts the project for use as a Claude Code plugin and is
+maintained by Civic Technologies, Inc. for internal use.
+
+Significant port changes (2026):
+  - Renamed GEMINI.md -> CLAUDE.md (and conversions/GEMINI.md -> conversions/CLAUDE.md).
+  - Replaced gemini-extension.json with .claude-plugin/plugin.json.
+  - Moved settings, hooks, commands, and skills from .gemini/ to .claude/.
+  - Converted slash commands from .toml (description+prompt fields) to .md
+    (YAML frontmatter + body) using $ARGUMENTS instead of {{args}}.
+  - Replaced Gemini-specific tool references (run_shell_command, web_fetch,
+    save_memory, replace, write_file, read_file, grep_search) with the
+    Claude Code equivalents (Bash, WebFetch, auto-memory rule, Edit, Write,
+    Read, Grep) throughout CLAUDE.md.
+  - Replaced the SessionStart hook's `custom_vars` env-var injection with an
+    `additionalContext` payload that instructs the agent on the deterministic
+    venv path and GOOGLE_ADS_CONFIGURATION_FILE_PATH to prepend to Bash calls.
+  - Removed Gemini-specific `~/.gemini/policies/ads_assistant.toml` policy
+    management; the equivalent guardrail is encoded directly in CLAUDE.md
+    as a "NO PERSISTENCE" rule against Claude Code's auto-memory system.
+  - Pointed the upstream-version checker at a configurable URL via the
+    CIVIC_GADS_REMOTE_PLUGIN_JSON_URL env var (skips silently when unset).
+  - Simplified install.sh / install.ps1 to drop jq dependency and the
+    `gemini extensions install` step (Claude Code plugins are loaded
+    automatically when .claude-plugin/plugin.json is present).
+  - Simplified update.sh / update.ps1 / uninstall.sh / uninstall.ps1
+    accordingly.
+
+The hard constraints, GAQL validation rules, conversion troubleshooting
+workflow, all api_examples/ scripts, and the conversions/ rulebook are
+preserved verbatim from the upstream and remain Google's authored work.
+
+Apache 2.0 license terms apply unchanged. See LICENSE for the full text.
