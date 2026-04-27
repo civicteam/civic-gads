@@ -120,10 +120,16 @@ When the session ends, the `SessionEnd` hook removes `./.venv/` and clears
 
 Slash commands:
 
+- `/smoke-test` — verify install. Runs automated checks (venv, config,
+  CLAUDE.md loaded, slash commands present, ext_version skill) and prints a
+  checklist of manual prompts to validate guardrails and the live-API path.
+  Pass `no-api` to skip the credential-dependent steps.
 - `/explain <code or concept>` — fast plain-language explainer with analogies.
 - `/step_by_step <task>` — turns a request into an ordered, verifiable plan.
 - `/conversions_support_package` — produces the gTech-ready single-file
   diagnostic.
+
+After install, run `/smoke-test` first.
 
 ## Project layout
 
