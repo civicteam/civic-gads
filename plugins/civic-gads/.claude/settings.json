@@ -7,11 +7,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/configure_environment.py"
+            "command": "python3 hooks/configure_environment.py"
           },
           {
             "type": "command",
-            "command": "python3 .claude/hooks/check_github_version.py"
+            "command": "python3 hooks/check_github_version.py"
           }
         ]
       }
@@ -22,7 +22,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/cleanup_environment.py"
+            "command": "python3 hooks/cleanup_environment.py"
           }
         ]
       }

@@ -1,18 +1,33 @@
+# venv lives wherever the user runs `claude`; cover both the plugin-tree case
+# and the user's workspace.
+**/.venv/
 .venv/
+
+# Cloned Google Ads client library repos (large; opt-in via install.sh).
+**/client_libs/
 client_libs/
-.claude/settings.local.json
-config/google-ads.yaml
-config/google_ads_php.ini
-config/google_ads_config.rb
-config/ads.properties
-.claude/check_github_version.log
-.claude/hooks/hook_debug.log
-saved/code/*
-saved/csv/*
-saved/data/*
-!saved/code/.gitkeep
-!saved/csv/.gitkeep
-!saved/data/.gitkeep
+
+# Local Claude Code session permissions; not part of plugin distribution.
+**/.claude/settings.local.json
+
+# Runtime credentials (copied from $HOME by configure_environment.py).
+**/config/google-ads.yaml
+**/config/google_ads_php.ini
+**/config/google_ads_config.rb
+**/config/ads.properties
+
+# Hook logs.
+**/check_github_version.log
+**/hook_debug.log
+
+# Generated artifacts (keep dirs via .gitkeep).
+**/saved/code/*
+**/saved/csv/*
+**/saved/data/*
+!**/saved/code/.gitkeep
+!**/saved/csv/.gitkeep
+!**/saved/data/.gitkeep
+
 __pycache__/
 *.pyc
 .DS_Store

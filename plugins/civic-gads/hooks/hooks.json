@@ -1,0 +1,31 @@
+{
+  "description": "civic-gads — provisions a sandboxed venv with the Google Ads client library and copies credentials from ~/google-ads.yaml (or fallback configs) into the user's workspace at session start; cleans up at session end.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/configure_environment.py"
+          },
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/check_github_version.py"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "exit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/cleanup_environment.py"
+          }
+        ]
+      }
+    ]
+  }
+}

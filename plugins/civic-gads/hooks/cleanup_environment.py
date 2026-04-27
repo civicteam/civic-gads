@@ -24,9 +24,9 @@ import shutil
 import sys
 
 def cleanup():
-    # Script lives at .claude/hooks/<file>; project root is 2 levels up.
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(script_dir, "../.."))
+    # The workspace is the user's CWD when they invoked Claude (or an explicit
+    # override via CIVIC_GADS_WORKSPACE), NOT the plugin install dir.
+    project_root = os.environ.get("CIVIC_GADS_WORKSPACE") or os.getcwd()
     config_dir = os.path.join(project_root, "config")
 
     if not os.path.exists(config_dir):

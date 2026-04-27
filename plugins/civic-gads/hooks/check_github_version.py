@@ -15,9 +15,9 @@ import re
 import sys
 import urllib.request
 
-# Script is at .claude/hooks/<file>; log file lives next to it.
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-log_path = os.path.join(base_dir, "check_github_version.log")
+# Script is at <plugin_root>/hooks/<file>. plugin_root is one level up.
+plugin_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+log_path = os.path.join(plugin_root, "check_github_version.log")
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -45,9 +45,7 @@ DEFAULT_REMOTE_URL = os.environ.get("CIVIC_GADS_REMOTE_PLUGIN_JSON_URL", "")
 
 def get_local_version():
     """Read the local plugin version from .claude-plugin/plugin.json."""
-    # base_dir is .claude/; plugin.json is at <project_root>/.claude-plugin/plugin.json.
-    project_root = os.path.dirname(base_dir)
-    json_path = os.path.join(project_root, ".claude-plugin", "plugin.json")
+    json_path = os.path.join(plugin_root, ".claude-plugin", "plugin.json")
 
     try:
         with open(json_path, "r") as f:

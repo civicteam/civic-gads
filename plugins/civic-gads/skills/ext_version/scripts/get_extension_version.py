@@ -22,16 +22,14 @@ import sys
 def get_extension_version() -> None:
     """Reads .claude-plugin/plugin.json and prints the version."""
     try:
-        # Script lives at .claude/skills/ext_version/scripts/get_extension_version.py
-        # plugin.json lives at .claude-plugin/plugin.json (4 levels up from script).
-        base_dir = os.path.dirname(
+        # Script lives at <plugin_root>/skills/ext_version/scripts/get_extension_version.py
+        # plugin.json lives at <plugin_root>/.claude-plugin/plugin.json (3 levels up).
+        plugin_root = os.path.dirname(
             os.path.dirname(
-                os.path.dirname(
-                    os.path.dirname(os.path.abspath(__file__))
-                )
+                os.path.dirname(os.path.abspath(__file__))
             )
         )
-        json_path = os.path.join(base_dir, ".claude-plugin", "plugin.json")
+        json_path = os.path.join(plugin_root, ".claude-plugin", "plugin.json")
 
         if not os.path.exists(json_path):
             # Fallback: running from project root.

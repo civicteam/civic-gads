@@ -90,7 +90,7 @@ sources; the client libs are large and stay opt-in).
 
 ```bash
 git clone https://github.com/civicteam/civic-gads.git
-cd civic-gads
+cd civic-gads/plugins/civic-gads
 ./install.sh                     # Python only (default)
 ./install.sh --php --ruby        # add other languages as needed
 claude                           # open this directory in Claude Code
@@ -127,35 +127,48 @@ Slash commands:
 
 ## Project layout
 
+The repo root is a single-plugin Claude Code marketplace; the plugin itself
+lives under `plugins/civic-gads/`.
+
 ```
 civic-gads/
-├── .claude-plugin/plugin.json     # plugin manifest
-├── .claude/
-│   ├── settings.json              # SessionStart/SessionEnd hooks
-│   ├── commands/                  # slash commands (Markdown + frontmatter)
-│   ├── skills/ext_version/        # version skill
-│   └── hooks/                     # configure_environment.py, cleanup_environment.py, check_github_version.py
-├── CLAUDE.md                      # the agent's persistent rulebook
-├── conversions/CLAUDE.md          # @-imported troubleshooting reference
-├── api_examples/                  # vetted Python scripts incl. gaql_validator.py
-├── client_libs/                   # cloned by install.sh (gitignored)
-├── config/                        # populated by SessionStart hook (gitignored)
-├── saved/
-│   ├── code/                      # all generated/modified scripts
-│   ├── csv/                       # tabular output
-│   └── data/                      # diagnostic reports
-├── customer_id.txt                # default customer ID for prompts
-├── install.sh / install.ps1       # clones client libraries
-├── update.sh / update.ps1         # updates project + libraries
-└── uninstall.sh / uninstall.ps1   # removes the project directory
+├── .claude-plugin/marketplace.json   # marketplace manifest (lists this one plugin)
+├── README.md / LICENSE / NOTICE      # repo-level docs
+└── plugins/civic-gads/               # the plugin
+    ├── .claude-plugin/plugin.json    # plugin manifest
+    ├── .claude/settings.json         # project-scope hooks (clone+cd flow)
+    ├── hooks/
+    │   ├── hooks.json                # plugin-scope hook registration (uses ${CLAUDE_PLUGIN_ROOT})
+    │   ├── configure_environment.py
+    │   ├── cleanup_environment.py
+    │   └── check_github_version.py
+    ├── commands/                     # slash commands (Markdown + frontmatter)
+    ├── skills/ext_version/           # version skill
+    ├── CLAUDE.md                     # the agent's persistent rulebook
+    ├── conversions/CLAUDE.md         # @-imported troubleshooting reference
+    ├── api_examples/                 # vetted Python scripts incl. gaql_validator.py
+    ├── client_libs/                  # cloned by install.sh (gitignored)
+    ├── config/                       # populated by SessionStart hook (gitignored)
+    ├── saved/{code,csv,data}/        # generated scripts, exports, diagnostic reports
+    ├── customer_id.txt               # default customer ID for prompts
+    ├── install.sh / install.ps1      # clones client libraries
+    ├── update.sh / update.ps1        # updates project + libraries
+    └── uninstall.sh / uninstall.ps1  # removes the project directory
 ```
+
+When installed via `/plugin install civic-gads@civic-gads`, the
+`SessionStart` hook reads the user's CWD as the workspace root: the `.venv`,
+`config/`, and `saved/` directories land in whatever directory the user ran
+`claude` from, NOT in the plugin install dir under `~/.claude/plugins/`.
+Set `CIVIC_GADS_WORKSPACE` to override this.
 
 ## Project context for your code
 
 To let the assistant read your application logic when generating saved code
-examples, add the path to `additionalDirectories` in `.claude/settings.json`,
-or symlink your project under `civic-gads/` so it sits inside the agent's
-default working tree. Claude Code's `Read`/`Grep` will pick it up natively.
+examples, add the path to `additionalDirectories` in your project's
+`.claude/settings.json`, or run `claude` from inside that project — the
+SessionStart hook treats your CWD as the workspace root. Claude Code's
+`Read`/`Grep` will pick it up natively.
 
 (The upstream's `--context_dir` flag was a thin wrapper around
 `.gemini/settings.json.context.includeDirectories`; with no equivalent file

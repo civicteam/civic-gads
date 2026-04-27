@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "civic-gads",
-      "source": "."
+      "source": "./plugins/civic-gads"
     }
   ]
 }

@@ -244,20 +244,26 @@ def create_virtual_env(project_root):
 
 
 def main():
+    # plugin_root: where this hook script lives (e.g., ~/.claude/plugins/.../plugins/civic-gads).
+    # workspace_root: the user's CWD when they invoked Claude — that's where venv/config/saved
+    # belong, NOT inside the plugin install dir which is shared across sessions.
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    plugin_root = os.path.abspath(os.path.join(script_dir, ".."))
     log_path = os.path.join(script_dir, "hook_debug.log")
     log_file = open(log_path, "a", buffering=1)
     sys.stderr = log_file
 
     try:
         print("DEBUG: Executing configure_environment.py...", file=sys.stderr)
-        project_root = os.path.abspath(os.path.join(script_dir, "../.."))
+        project_root = os.environ.get("CIVIC_GADS_WORKSPACE") or os.getcwd()
+        print(f"DEBUG: plugin_root={plugin_root}", file=sys.stderr)
+        print(f"DEBUG: project_root={project_root}", file=sys.stderr)
 
         create_virtual_env(project_root)
         config_dir = os.path.join(project_root, "config")
         ext_version_script = os.path.join(
-            project_root,
-            ".claude/skills/ext_version/scripts/get_extension_version.py",
+            plugin_root,
+            "skills", "ext_version", "scripts", "get_extension_version.py",
         )
 
         os.makedirs(config_dir, exist_ok=True)

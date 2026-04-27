@@ -12,5 +12,5 @@ This skill extracts the version from `.claude-plugin/plugin.json`.
 Run the python script to get the version:
 
 ```bash
-python3 .claude/skills/ext_version/scripts/get_extension_version.py
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/ext_version/scripts/get_extension_version.py
 ```
